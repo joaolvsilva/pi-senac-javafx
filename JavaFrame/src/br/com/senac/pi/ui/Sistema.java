@@ -2,16 +2,18 @@ package br.com.senac.pi.ui;
 
 import br.com.senac.pi.entidades.Produtos;
 import static br.com.senac.pi.repositorio.ProdutoRepositorio.listaProdutos;
-import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class Sistema extends javax.swing.JFrame {
-   static public Sistema telaPrincipal = new Sistema();
-   
+
+    private DefaultTableModel model;
+
+    static public Sistema telaPrincipal = new Sistema();
 
     public Sistema() {
         initComponents();
-         
+        model = (DefaultTableModel) tabelaProdutos.getModel();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -26,7 +28,7 @@ public class Sistema extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaProdutos = new javax.swing.JTable();
         txtCodigoCell = new javax.swing.JTextField();
         txtNomeCell = new javax.swing.JTextField();
         txtPrecoCell = new javax.swing.JTextField();
@@ -89,7 +91,7 @@ public class Sistema extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Produtos");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -112,25 +114,35 @@ public class Sistema extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setDragEnabled(true);
-        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
+        tabelaProdutos.setDragEnabled(true);
+        tabelaProdutos.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                tabelaProdutosComponentAdded(evt);
+            }
+        });
+        tabelaProdutos.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTable1AncestorAdded(evt);
+                tabelaProdutosAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                tabelaProdutosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        tabelaProdutos.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tabelaProdutosPropertyChange(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelaProdutos);
+        if (tabelaProdutos.getColumnModel().getColumnCount() > 0) {
+            tabelaProdutos.getColumnModel().getColumn(0).setResizable(false);
+            tabelaProdutos.getColumnModel().getColumn(2).setResizable(false);
         }
 
         txtPrecoCell.addActionListener(new java.awt.event.ActionListener() {
@@ -208,25 +220,21 @@ public class Sistema extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        dispose();
-        new NovoProduto().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-  
-    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
+        new NovoProdutoJDialog(new Sistema(), true, this).show();
 
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tabelaProdutosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tabelaProdutosAncestorAdded
+
+        if (listaProdutos.isEmpty()) {
+            Produtos testeProduto = new Produtos();
+            testeProduto.setCodigo("123123");
+            testeProduto.setNome("teste");
+            testeProduto.setPreco(120);
+            listaProdutos.add(testeProduto);
+        }
         //@model.setNumRows, reseta o numero de linhas da lista
         model.setNumRows(0);
-
-        //if list is null, create new item
-        if (listaProdutos.isEmpty()) {
-            Produtos produto = new Produtos();
-            produto.setCodigo("123123");
-            produto.setNome("garrafa");
-            produto.setPreco(10);
-            listaProdutos.add(produto);
-        }
-
         //Listando produtos na tabela de produtos
         for (Produtos p : listaProdutos) {
             model.addRow(
@@ -236,25 +244,37 @@ public class Sistema extends javax.swing.JFrame {
                         p.getPreco()
                     });
         }
-
-
-    }//GEN-LAST:event_jTable1AncestorAdded
+    }//GEN-LAST:event_tabelaProdutosAncestorAdded
     
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    public void attTabela() {
+        //@model.setNumRows, reseta o numero de linhas da lista
+        model.setNumRows(0);
+        //Listando produtos na tabela de produtos
+        for (Produtos p : listaProdutos) {
+            model.addRow(
+                    new Object[]{
+                        p.getCodigo(),
+                        p.getNome(),
+                        p.getPreco()
+                    });
+        }
+    }
+    
+    private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
         // TODO add your handling code here:
-       DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        String codigo = (String) model.getValueAt(jTable1.getSelectedRow(),0);
-        String nome = (String) model.getValueAt(jTable1.getSelectedRow(),1);
-        double preco = (double) model.getValueAt(jTable1.getSelectedRow(),2);
-        System.out.println("Código: " + codigo+"\n" +"Nome: "+ nome +"\n"+"Preço: "+ preco);
+        DefaultTableModel model = (DefaultTableModel) tabelaProdutos.getModel();
+        String codigo = (String) model.getValueAt(tabelaProdutos.getSelectedRow(), 0);
+        String nome = (String) model.getValueAt(tabelaProdutos.getSelectedRow(), 1);
+        double preco = (double) model.getValueAt(tabelaProdutos.getSelectedRow(), 2);
+        System.out.println("Código: " + codigo + "\n" + "Nome: " + nome + "\n" + "Preço: " + preco);
         EditarProduto editarProduto = new EditarProduto(codigo, nome, preco);
         editarProduto.setVisible(true);
-       
+
         txtCodigoCell.setText(codigo);
         txtNomeCell.setText(nome);
         txtPrecoCell.setText(Double.toString(preco));
-        
-    }//GEN-LAST:event_jTable1MouseClicked
+
+    }//GEN-LAST:event_tabelaProdutosMouseClicked
 
     private void txtPrecoCellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoCellActionPerformed
         // TODO add your handling code here:
@@ -264,8 +284,23 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
         new NovoUsuario().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-   
-   
+
+    private void tabelaProdutosComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelaProdutosComponentAdded
+
+    }//GEN-LAST:event_tabelaProdutosComponentAdded
+
+    private void tabelaProdutosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tabelaProdutosPropertyChange
+
+    }//GEN-LAST:event_tabelaProdutosPropertyChange
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(() -> {
+
+            new Sistema().setVisible(true);
+
+        });
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -277,7 +312,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabelaProdutos;
     private javax.swing.JTextField txtCodigoCell;
     private javax.swing.JTextField txtNomeCell;
     private javax.swing.JTextField txtPrecoCell;
