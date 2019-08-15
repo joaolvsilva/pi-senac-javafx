@@ -29,10 +29,9 @@ public class Login extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(600, 400));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(204, 51, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Login");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

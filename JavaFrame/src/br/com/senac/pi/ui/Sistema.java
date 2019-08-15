@@ -43,7 +43,7 @@ public class Sistema extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(600, 400));
 
-        jPanel1.setBackground(new java.awt.Color(204, 51, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         jButton1.setText("Novo produto");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -53,6 +53,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         jButton2.setText("Novo usuário");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -242,7 +247,9 @@ public class Sistema extends javax.swing.JFrame {
         String nome = (String) model.getValueAt(jTable1.getSelectedRow(),1);
         double preco = (double) model.getValueAt(jTable1.getSelectedRow(),2);
         System.out.println("Código: " + codigo+"\n" +"Nome: "+ nome +"\n"+"Preço: "+ preco);
-        
+        EditarProduto editarProduto = new EditarProduto(codigo, nome, preco);
+        editarProduto.setVisible(true);
+       
         txtCodigoCell.setText(codigo);
         txtNomeCell.setText(nome);
         txtPrecoCell.setText(Double.toString(preco));
@@ -252,12 +259,12 @@ public class Sistema extends javax.swing.JFrame {
     private void txtPrecoCellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoCellActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecoCellActionPerformed
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> {
-            new Sistema().setVisible(true);
-        });
 
-    }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        new NovoUsuario().setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+   
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
