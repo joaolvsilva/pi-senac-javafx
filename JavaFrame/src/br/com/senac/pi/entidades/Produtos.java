@@ -10,9 +10,34 @@ package br.com.senac.pi.entidades;
  * @author jose.rsneto10
  */
 public class Produtos {
-    private String codigo;
-    private String nome;
+
+    private String codigo, nome, disponivel;
     private double preco;
+    private int quantidade, quantidadeMin;
+
+    public String getDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(String disponivel) {
+        this.disponivel = disponivel;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public int getQuantidadeMin() {
+        return quantidadeMin;
+    }
+
+    public void setQuantidadeMin(int quantidadeMin) {
+        this.quantidadeMin = quantidadeMin;
+    }
 
     public String getCodigo() {
         return codigo;
@@ -37,6 +62,5 @@ public class Produtos {
     public void setPreco(double preco) {
         this.preco = preco;
     }
-    
-    
+
 }

@@ -5,18 +5,27 @@
  */
 package br.com.senac.pi.ui;
 
+import br.com.senac.pi.entidades.Usuario;
+import static br.com.senac.pi.repositorio.UsuarioRepositorio.usuarios;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author jose.rsneto10
  */
-public class NovoUsuario extends javax.swing.JFrame {
+public class NovoUsuarioJDialog extends javax.swing.JDialog {
+
+    private UsuariosJDialog telaUsuarioPrincipal;
 
     /**
-     * Creates new form NovoUsuario
+     * Creates new form teste
+     *
+     * @param parent
+     * @param modal
      */
-    public NovoUsuario() {
+    public NovoUsuarioJDialog(java.awt.Frame parent, boolean modal, UsuariosJDialog tela) {
+        super(parent, modal);
+        this.telaUsuarioPrincipal = tela;
         initComponents();
     }
 
@@ -36,11 +45,11 @@ public class NovoUsuario extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        txtNome = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        rbAdmin = new javax.swing.JRadioButton();
+        rbVendas = new javax.swing.JRadioButton();
+        rbGerente = new javax.swing.JRadioButton();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
@@ -48,6 +57,8 @@ public class NovoUsuario extends javax.swing.JFrame {
         txtSenhaConfirme = new javax.swing.JPasswordField();
         labelSenhaIgual = new javax.swing.JLabel();
         labelSenhaErro = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtRg = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -62,17 +73,17 @@ public class NovoUsuario extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap())
+                .addGap(36, 36, 36))
         );
 
         jLabel2.setText("Nome");
@@ -85,16 +96,16 @@ public class NovoUsuario extends javax.swing.JFrame {
 
         jLabel6.setText("Setor");
 
-        jRadioButton1.setText("admin");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        rbAdmin.setText("admin");
+        rbAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                rbAdminActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setText("Vendas");
+        rbVendas.setText("Vendas");
 
-        jRadioButton3.setText("Gerente/estoque");
+        rbGerente.setText("Gerente/estoque");
 
         jToggleButton1.setText("Salvar");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -122,6 +133,8 @@ public class NovoUsuario extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("RG");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,7 +146,7 @@ public class NovoUsuario extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1))
+                        .addComponent(txtNome))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -141,7 +154,7 @@ public class NovoUsuario extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
-                                .addComponent(jTextField2))
+                                .addComponent(txtEmail))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(txtSenha))))
@@ -160,31 +173,39 @@ public class NovoUsuario extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton1)
+                                .addComponent(rbAdmin)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton2)
+                                .addComponent(rbVendas)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton3))
+                                .addComponent(rbGerente))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(labelSenhaErro, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addGap(96, 96, 96)
                                     .addComponent(labelSenhaIgual, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 131, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(31, 31, 31)
+                        .addComponent(txtRg)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -194,15 +215,15 @@ public class NovoUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(txtSenhaConfirme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8)
-                .addComponent(labelSenhaIgual, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addComponent(labelSenhaIgual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(2, 2, 2)
                 .addComponent(labelSenhaErro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(rbAdmin)
+                    .addComponent(rbVendas)
+                    .addComponent(rbGerente))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jToggleButton1)
@@ -215,9 +236,9 @@ public class NovoUsuario extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void rbAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAdminActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_rbAdminActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         // TODO add your handling code here:
@@ -226,12 +247,42 @@ public class NovoUsuario extends javax.swing.JFrame {
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // TODO add your handling code here:
-       
-        
 
+        Usuario novoUsuario = new Usuario(
+                Integer.parseInt(txtRg.getText()),
+                txtNome.getText(),
+                txtEmail.getText(),
+                txtSenha.getText(),
+                setor()
+        );
+        if(setor() != "Erro"){
+            usuarios.add(novoUsuario);
+            telaUsuarioPrincipal.attTabelaUsuarios();
+            dispose();
+        }
 
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+    public String setor() {
+        if (rbAdmin.isSelected() && rbVendas.isSelected()
+                || rbAdmin.isSelected() && rbGerente.isSelected()
+                || rbVendas.isSelected() && rbGerente.isSelected()) {
+            JOptionPane.showMessageDialog(null, "Selecione somente um dos setores", "Erro ao selecionar setor", JOptionPane.ERROR_MESSAGE);
+            return "Erro";
+        } else {
+            if (rbAdmin.isSelected()) {
+                return rbAdmin.getText();
+            }
+            if (rbVendas.isSelected()) {
+                return rbVendas.getText();
+            }
+            if (rbGerente.isSelected()) {
+                return rbGerente.getText();
+            }
+            return null;
+        }
 
+       
+    }
     private void txtSenhaConfirmeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSenhaConfirmeFocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSenhaConfirmeFocusGained
@@ -242,7 +293,6 @@ public class NovoUsuario extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtSenhaConfirmeFocusLost
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -251,17 +301,19 @@ public class NovoUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JLabel labelSenhaErro;
     private javax.swing.JLabel labelSenhaIgual;
+    private javax.swing.JRadioButton rbAdmin;
+    private javax.swing.JRadioButton rbGerente;
+    private javax.swing.JRadioButton rbVendas;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtRg;
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JPasswordField txtSenhaConfirme;
     // End of variables declaration//GEN-END:variables
