@@ -1,20 +1,18 @@
 package br.com.senac.pi.ui;
 
-import br.com.senac.pi.entidades.Produtos;
-import static br.com.senac.pi.repositorio.ProdutoRepositorio.listaProdutos;
-import java.awt.Color;
+import br.com.senac.pi.controllers.SistemaController;
 import javax.swing.table.DefaultTableModel;
 
 public class Sistema extends javax.swing.JFrame {
 
     private DefaultTableModel model;
+    private SistemaController controllerSistema = new SistemaController();
 
     static public Sistema telaPrincipal = new Sistema();
 
     public Sistema() {
         initComponents();
-        model = (DefaultTableModel) tabelaProdutos.getModel();
-
+        model = controllerSistema.getTableModell(tabelaProdutos);
     }
 
     @SuppressWarnings("unchecked")
@@ -37,7 +35,6 @@ public class Sistema extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(818, 474));
         setMinimumSize(new java.awt.Dimension(800, 474));
         setModalExclusionType(null);
-        setPreferredSize(new java.awt.Dimension(800, 474));
         setResizable(false);
         setSize(new java.awt.Dimension(600, 400));
 
@@ -117,11 +114,6 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
         tabelaProdutos.setDragEnabled(true);
-        tabelaProdutos.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                tabelaProdutosComponentAdded(evt);
-            }
-        });
         tabelaProdutos.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -134,11 +126,6 @@ public class Sistema extends javax.swing.JFrame {
         tabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaProdutosMouseClicked(evt);
-            }
-        });
-        tabelaProdutos.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tabelaProdutosPropertyChange(evt);
             }
         });
         jScrollPane1.setViewportView(tabelaProdutos);
@@ -190,50 +177,14 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tabelaProdutosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tabelaProdutosAncestorAdded
-
-        if (listaProdutos.isEmpty()) {
-            Produtos testeProduto = new Produtos();
-            testeProduto.setCodigo("123123");
-            testeProduto.setNome("teste");
-            testeProduto.setPreco(120);
-            testeProduto.setQuantidade(1);
-            testeProduto.setQuantidadeMin(0);
-            testeProduto.setDisponivel("sim");
-            listaProdutos.add(testeProduto);
-        }
-        //@model.setNumRows, reseta o numero de linhas da lista
-        model.setNumRows(0);
-        //Listando produtos na tabela de produtos
-        for (Produtos p : listaProdutos) {
-            model.addRow(
-                    new Object[]{
-                        p.getCodigo(),
-                        p.getNome(),
-                        p.getPreco(),
-                        p.getQuantidade(),
-                        p.getQuantidadeMin(),
-                        p.getDisponivel()
-                    });
-        }
+        controllerSistema.tableIsEmpety();
+        controllerSistema.listarEntidades(model);
     }//GEN-LAST:event_tabelaProdutosAncestorAdded
-    
+
     public void attTabela() {
-        //@model.setNumRows, reseta o numero de linhas da lista
-        model.setNumRows(0);
-        //Listando produtos na tabela de produtos
-        for (Produtos p : listaProdutos) {
-            model.addRow(
-                    new Object[]{
-                        p.getCodigo(),
-                        p.getNome(),
-                        p.getPreco(),
-                        p.getQuantidade(),
-                        p.getQuantidadeMin(),
-                        p.getDisponivel()
-                    });
-        }
+        controllerSistema.attTable(model);
     }
-    
+
     private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) tabelaProdutos.getModel();
@@ -244,35 +195,21 @@ public class Sistema extends javax.swing.JFrame {
         EditarProduto editarProduto = new EditarProduto(codigo, nome, preco);
         editarProduto.setVisible(true);
 
-      
 
     }//GEN-LAST:event_tabelaProdutosMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         new UsuariosJDialog(this, true).show();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void tabelaProdutosComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelaProdutosComponentAdded
-
-    }//GEN-LAST:event_tabelaProdutosComponentAdded
-
-    private void tabelaProdutosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tabelaProdutosPropertyChange
-
-    }//GEN-LAST:event_tabelaProdutosPropertyChange
-
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        // TODO add your handling code here:
-        
         dispose();
         new Login().setVisible(true);
     }//GEN-LAST:event_btnSairActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-
             new Sistema().setVisible(true);
-
         });
 
     }

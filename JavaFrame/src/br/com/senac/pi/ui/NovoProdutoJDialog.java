@@ -18,7 +18,7 @@ public class NovoProdutoJDialog extends javax.swing.JDialog {
 
     //passando funcionalidade da tela principal para jdialog
     private Sistema telaPrincipal;
-
+    
     //Contrutor que recebe metodos da tela principal 
     public NovoProdutoJDialog(java.awt.Frame parent, boolean modal, Sistema tela) {
         super(parent, modal);
