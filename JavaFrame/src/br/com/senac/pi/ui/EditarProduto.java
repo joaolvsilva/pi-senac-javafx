@@ -2,7 +2,6 @@
 package br.com.senac.pi.ui;
 
 import br.com.senac.pi.entidades.Produtos;
-import br.com.senac.pi.repositorio.DaoRepositorio;
 import br.com.senac.pi.repositorio.ProdutoRepositorio;
 
 public class EditarProduto extends javax.swing.JFrame {
@@ -45,7 +44,6 @@ public class EditarProduto extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(300, 300));
         setMinimumSize(new java.awt.Dimension(300, 300));
-        setPreferredSize(new java.awt.Dimension(300, 300));
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
 

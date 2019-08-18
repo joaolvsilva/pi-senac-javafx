@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import br.com.senac.pi.entidades.Produtos;
-import br.com.senac.pi.ui.EditarProduto;
+
 
 public class SistemaController {
 
