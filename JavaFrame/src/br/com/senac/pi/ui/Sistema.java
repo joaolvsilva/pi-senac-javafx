@@ -1,18 +1,20 @@
 package br.com.senac.pi.ui;
 
-import br.com.senac.pi.controllers.SistemaController;
+
+import br.com.senac.pi.entidades.Produtos;
+import static br.com.senac.pi.repositorio.ProdutoRepositorio.listaProdutos;
 import javax.swing.table.DefaultTableModel;
 
 public class Sistema extends javax.swing.JFrame {
 
     private DefaultTableModel model;
-    private SistemaController controllerSistema = new SistemaController();
+
 
     static public Sistema telaPrincipal = new Sistema();
 
     public Sistema() {
         initComponents();
-        model = controllerSistema.getTableModell(tabelaProdutos);
+        model = (DefaultTableModel) tabelaProdutos.getModel();
     }
 
     @SuppressWarnings("unchecked")
@@ -177,12 +179,44 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tabelaProdutosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tabelaProdutosAncestorAdded
-        controllerSistema.tableIsEmpety();
-        controllerSistema.listarEntidades(model);
+        if (listaProdutos.isEmpty()) {
+            Produtos testeProduto = new Produtos();
+            testeProduto.setCodigo("123123");
+            testeProduto.setNome("teste");
+            testeProduto.setPreco(120);
+            testeProduto.setQuantidade(1);
+            testeProduto.setQuantidadeMin(0);
+            testeProduto.setDisponivel("sim");
+            listaProdutos.add(testeProduto);
+
+        }
+        model.setNumRows(0);
+        for (Produtos p : listaProdutos) {
+            model.addRow(
+                    new Object[]{
+                        p.getCodigo(),
+                        p.getNome(),
+                        p.getPreco(),
+                        p.getQuantidade(),
+                        p.getQuantidadeMin(),
+                        p.getDisponivel()
+                    });
+        }
     }//GEN-LAST:event_tabelaProdutosAncestorAdded
 
     public void attTabela() {
-        controllerSistema.attTable(model);
+        model.setNumRows(0);
+        for (Produtos p : listaProdutos) {
+            model.addRow(
+                    new Object[]{
+                        p.getCodigo(),
+                        p.getNome(),
+                        p.getPreco(),
+                        p.getQuantidade(),
+                        p.getQuantidadeMin(),
+                        p.getDisponivel()
+                    });
+        }
     }
 
     private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
