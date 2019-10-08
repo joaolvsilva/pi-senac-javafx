@@ -130,7 +130,7 @@ public class UsuariosJDialog extends javax.swing.JDialog {
     private void slvarNovoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slvarNovoUsuarioActionPerformed
         // TODO add your handling code here:
         
-       new NovoUsuarioJDialog(null,true,this).show();
+     //  new NovoUsuarioJDialog(null,true,this).show();
     }//GEN-LAST:event_slvarNovoUsuarioActionPerformed
 
     private void tabelaUsuariosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tabelaUsuariosAncestorAdded
