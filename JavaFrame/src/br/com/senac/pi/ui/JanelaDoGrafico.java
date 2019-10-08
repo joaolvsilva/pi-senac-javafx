@@ -5,7 +5,7 @@
  */
 package br.com.senac.pi.ui;
 
-import br.com.senac.pi.entidades.Grafico;
+//import br.com.senac.pi.entidades.Grafico;
 import br.com.senac.pi.entidades.Produtos;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.awt.BorderLayout;
@@ -26,15 +26,15 @@ public class JanelaDoGrafico extends javax.swing.JFrame {
         
         
         ArrayList<Produtos> listaDeProdutos = new ArrayList<>();
-        listaDeProdutos.add(new Produtos(2,"Mesa"));
-        listaDeProdutos.add(new Produtos(8,"Cadeira"));
-        listaDeProdutos.add(new Produtos(40,"Sofá"));
-        listaDeProdutos.add(new Produtos(5,"GuardaRoupa"));
+//        listaDeProdutos.add(new Produtos(2,"Mesa"));
+//        listaDeProdutos.add(new Produtos(8,"Cadeira"));
+//        listaDeProdutos.add(new Produtos(40,"Sofá"));
+//        listaDeProdutos.add(new Produtos(5,"GuardaRoupa"));
         
-        Grafico grafico = new Grafico();
-        this.jpnGrafico.setLayout(new BorderLayout());
-        this.jpnGrafico.add(grafico.criarGrafico(listaDeProdutos));
-        pack();
+        //Grafico grafico = new Grafico();
+//        this.jpnGrafico.setLayout(new BorderLayout());
+//        this.jpnGrafico.add(grafico.criarGrafico(listaDeProdutos));
+//        pack();
         
     }
 
